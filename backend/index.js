@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Pokemon API!');
 });
 
-app.use('/', router);
+app.use('/api', router);
 
 
 
