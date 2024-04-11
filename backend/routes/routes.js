@@ -1,29 +1,44 @@
 const express = require('express');
-const Pokemon = require('../modules/modules.js');
 const router = express.Router();
 
-router.get('/pokemons', async (req, res) => {
+const jsonData = require('../pokedex.json');
+
+router.get('/pokemons', (req, res) => {
     try {
-        const pokemons = await Pokemon.find();
-        res.json(pokemons);
+        res.json(jsonData);
     } catch (err) {
-        res.json({ message: err });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
-router.get('/pokemons/:id', async (req, res) => {
+router.get('/pokemons/:id', (req, res) => {
     try {
-        const pokemon = await Pokemon.findById(req.params.id);
-        res.json(pokemon);
+        const pokemon = jsonData.find(p => p.id === parseInt(req.params.id));
+        if (pokemon) {
+            res.json(pokemon);
+        } else {
+            res.status(404).json({ message: "Pokemon not found" });
+        }
     } catch (err) {
-        res.json({ message: err });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
+router.get('/pokemons/:id/:info', (req, res) => {
+    const pokemon = jsonData.find(p => p.id === parseInt(req.params.id));
+    if (!pokemon) {
+        return res.status(404).json({ message: "Pokemon not found" });
+    }
 
+    const info = req.params.info.toLowerCase();
+    if (pokemon.hasOwnProperty(info)) {
+        res.json({ [info]: pokemon[info] });
+    } else {
+        res.status(400).json({ message: "Invalid info requested" });
+    }
+});
 
 module.exports = router;
-
 
 
 
