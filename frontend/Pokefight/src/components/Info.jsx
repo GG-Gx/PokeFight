@@ -53,48 +53,66 @@ function Info() {
   }, [id]);
 
   return (
-    <Box>
-      
-      <Card display="flex" justifyContent="center" alignItems="center"
-      margin={4}>
+    <Box p={{ base: 4, sm: 6, md: 8 }} maxW="1200px" mx="auto">
+    <Card display="flex" justifyContent="center" alignItems="center" margin={4} boxShadow="lg">
       {pokemonData && (
         <div>
           <CardHeader>
-          <Heading as="h3" size="lg">{pokemonData.name.english}</Heading>
-
+            <Heading as="h3" size="lg" textAlign="center">
+              {pokemonData.name.english}
+            </Heading>
           </CardHeader>
-          <Flex direction="column" display="flex" flexWrap="wrap"  alignItems="center" > 
 
-          <CardBody>
-          <Image src={pokeImg} alt={pokemonData.name.english}
-            boxSize="100px"
-            objectFit="cover"
-            mx="auto"
-            my="auto" />
-          
-          
-          
-          <UnorderedList styleType="none">
-            <ListItem><Text>Type: {pokemonData.type.join(", ")}</Text></ListItem>
-            <ListItem><Text>Base Stats:</Text></ListItem>
-            <ListItem><Text>HP: {pokemonData.base.HP}</Text></ListItem>
-            <ListItem><Text>Attack: {pokemonData.base.Attack}</Text></ListItem>
-            <ListItem><Text>Defense: {pokemonData.base.Defense}</Text></ListItem>
-            <ListItem><Text>Sp. Attack: {pokemonData.base["Sp. Attack"]}</Text></ListItem>
-            <ListItem><Text>Sp. Defense: {pokemonData.base["Sp. Defense"]}</Text></ListItem>
-            <ListItem><Text>Speed: {pokemonData.base.Speed}</Text></ListItem>
-            
-          </UnorderedList>
-          </CardBody>
+          <Flex direction={{ base: 'column', md: 'row' }} alignItems="center" justify="center" flexWrap="wrap">
+            <CardBody display="flex" flexDirection="column" alignItems="center" justifyContent="center" mb={{ base: 4, md: 0 }}>
+              <Image
+                src={pokeImg}
+                alt={pokemonData.name.english}
+                boxSize={{ base: '100px', sm: '150px', md: '200px' }}
+                objectFit="cover"
+                mb={4}
+              />
+            </CardBody>
+
+            <CardBody>
+              <UnorderedList styleType="none" spacing={2}>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>Type: {pokemonData.type.join(", ")}</Text>
+                </ListItem>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>Base Stats:</Text>
+                </ListItem>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>HP: {pokemonData.base.HP}</Text>
+                </ListItem>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>Attack: {pokemonData.base.Attack}</Text>
+                </ListItem>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>Defense: {pokemonData.base.Defense}</Text>
+                </ListItem>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>Sp. Attack: {pokemonData.base["Sp. Attack"]}</Text>
+                </ListItem>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>Sp. Defense: {pokemonData.base["Sp. Defense"]}</Text>
+                </ListItem>
+                <ListItem>
+                  <Text fontSize={{ base: 'sm', md: 'md' }}>Speed: {pokemonData.base.Speed}</Text>
+                </ListItem>
+              </UnorderedList>
+            </CardBody>
           </Flex>
         </div>
-        
       )}
-      </Card>
-      <Button><Link to="/api/pokemons">all Pokemons</Link></Button>
+    </Card>
 
-    </Box>
-   
+    <Center>
+      <Button >
+        <Link to="/api/pokemons">All Pokemons</Link>
+      </Button>
+    </Center>
+  </Box>   
   );
 }
 

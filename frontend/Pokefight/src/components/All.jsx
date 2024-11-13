@@ -40,7 +40,9 @@ function All() {
   return (
     <> 
     <Link to ="/api/pokemons/fight" ><Button>Make them fight!</Button></Link>
-    <Flex direction="column" alignItems="center">
+    <Flex direction="column" alignItems="center"
+
+     >
       {pokemonData && (
         <Box direction="row" display="flex" flexWrap="wrap"  alignItems="center" 
         >
@@ -48,7 +50,7 @@ function All() {
             <Link to={`/api/pokemons/${pokemon.id}`} key={pokemon.id}>
             <Card 
             display="flex" justifyContent="center" alignItems="center"
-             margin={4} key={pokemon.id}
+             margin={1} key={pokemon.id}
              boxShadow="lg"
              
              >

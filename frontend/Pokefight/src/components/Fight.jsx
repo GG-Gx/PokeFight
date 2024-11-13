@@ -11,7 +11,9 @@ import {
   Flex,
   Box,
   Button,
-  Text
+  Text,
+  CardFooter,
+  Stack
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -109,24 +111,29 @@ function Fight() {
       </Select>
 
       {selectedPokemon1 && (
-        <Card>
-          <CardHeader>
-            <Heading as="h3" size="lg">
-             {selectedPokemon1.name.english}
-            </Heading>
-          </CardHeader>
+        <Card maxW='sm'>
+          <CardBody>
           <Center>
           <Image
+
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${selectedPokemon1.id}.png`}
             alt={selectedPokemon1.name.english}
-            boxSize="200px"
+            boxSize="100px"
             objectFit="cover"
             onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
             style={{ transition: "transform 0.3s ease-in-out" }}
           />
-          <CardBody>
-            <UnorderedList styleType="none">
+          </Center>
+          <Stack spacing={3}>
+          <Heading as="h3" size="lg">
+              {selectedPokemon1.name.english}
+            </Heading>
+          </Stack>
+       
+          </CardBody>
+          <CardFooter>
+          <UnorderedList styleType="none">
               <li>Type: {selectedPokemon1.type.join(", ")}</li>
               <li>Attack: {selectedPokemon1.base.Attack}</li>
               <li>Defense: {selectedPokemon1.base.Defense}</li>
@@ -135,8 +142,7 @@ function Fight() {
               <li>Sp. Attack: {selectedPokemon1.base["Sp. Attack"]}</li>
               <li>Sp. Defense: {selectedPokemon1.base["Sp. Defense"]}</li>
             </UnorderedList>
-          </CardBody>
-          </Center>
+          </CardFooter>
         </Card>
       )}
       </Box>
@@ -162,34 +168,41 @@ function Fight() {
       {selectedPokemon2 && (
         
         <Card>
-          <CardHeader>
-            <Heading as="h3" size="lg">
-              {selectedPokemon2.name.english}
-            </Heading>
-          </CardHeader>
+        
+          <CardBody>
           <Center>
           <Image
+            
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${selectedPokemon2.id}.png`}
             alt={selectedPokemon2.name.english}
-            boxSize="200px"
+            boxSize="100px"
             objectFit="cover"
             onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
             style={{ transition: "transform 0.3s ease-in-out" }}
           />
-          <CardBody>
-          <UnorderedList styleType="none">
-            <li>Type: {selectedPokemon2.type.join(", ")}</li>
-            <li>Attack: {selectedPokemon2.base.Attack}</li>
-            <li>Defense: {selectedPokemon2.base.Defense}</li>
-            <li>HP: {selectedPokemon2.base.HP}</li>
-            <li>Speed: {selectedPokemon2.base.Speed}</li>
-            <li>Sp. Attack: {selectedPokemon2.base["Sp. Attack"]}</li>
-            <li>Sp. Defense: {selectedPokemon2.base["Sp. Defense"]}</li>
-          </UnorderedList>
+          </Center>
+        <Stack spacing={3}>
+        <Heading as="h3" size="lg">
+              {selectedPokemon2.name.english}
+            </Heading>
+        </Stack>
           </CardBody>
 
-        </Center>
+      
+
+      
+        <CardFooter>
+          <UnorderedList styleType="none">
+              <li>Type: {selectedPokemon1.type.join(", ")}</li>
+              <li>Attack: {selectedPokemon1.base.Attack}</li>
+              <li>Defense: {selectedPokemon1.base.Defense}</li>
+              <li>HP: {selectedPokemon1.base.HP}</li>
+              <li>Speed: {selectedPokemon1.base.Speed}</li>
+              <li>Sp. Attack: {selectedPokemon1.base["Sp. Attack"]}</li>
+              <li>Sp. Defense: {selectedPokemon1.base["Sp. Defense"]}</li>
+            </UnorderedList>
+          </CardFooter>
         </Card>
         
       )}
@@ -216,7 +229,7 @@ function Fight() {
           
       )}
       <Button as={Link} to="/api/pokemons"
-      margin={10}
+      margin={1}
       >Back to Pokemon List</Button>
     </>
   );
