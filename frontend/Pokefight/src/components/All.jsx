@@ -12,7 +12,7 @@ function All() {
 
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/pokemons', {
+    fetch('https://pokeapiggg.vercel.app/api/pokemons', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

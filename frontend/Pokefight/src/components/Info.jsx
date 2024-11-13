@@ -10,7 +10,7 @@ function Info() {
   const [pokeImg , setPokeImg] = useState(null);  
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/pokemons/${id}`, {
+    fetch(`https://pokeapiggg.vercel.app/api/pokemons/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
