@@ -13,7 +13,8 @@ import {
   Button,
   Text,
   CardFooter,
-  Stack
+  Stack,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -24,7 +25,6 @@ function Fight() {
   const [selectedPokemon1, setSelectedPokemon1] = useState(null); 
   const [selectedPokemon2, setSelectedPokemon2] = useState(null);
   const [fightResult, setFightResult] = useState(null);
-
 
   useEffect(() => {
     fetch("https://pokeapiggg.vercel.app/api/pokemons", {
@@ -59,7 +59,6 @@ function Fight() {
     setSelectedPokemon2(pokemonList.find((pokemon) => pokemon.id === selectedId));
   };
 
-
   const handleFight = () => {
     if (!selectedPokemon1 || !selectedPokemon2) {
       setFightResult("Please select two Pokemon to fight!");
@@ -76,7 +75,6 @@ function Fight() {
         winner = selectedPokemon2;
       }
 
-      // If there's a winner in this attribute comparison, break out of the loop
       if (winner) {
         break;
       }
@@ -92,149 +90,125 @@ function Fight() {
     }
   };
 
-  
- 
-
- 
   return (
     <>
-      <Heading>Choose your Pokemon</Heading>
-      <Flex direction="row" justifyContent="center">
-      <Box>
-      <h2>Player 1</h2>
-      <Select placeholder="Select Pokemon 1" onChange={handlePokemonChange1}>
-        {pokemonList.map((pokemon) => (
-          <option key={pokemon.id} value={pokemon.id}>
-            {pokemon.name.english}
-          </option>
-        ))}
-      </Select>
+      <Heading textAlign="center" mb={4}>Choose your Pokemon</Heading>
+      <Flex direction={{ base: "column", md: "row" }} justifyContent="center" alignItems="center" wrap="wrap">
+        <Box w={{ base: "100%", md: "45%" }} p={4}>
+          <h2>Player 1</h2>
+          <Select placeholder="Select Pokemon 1" onChange={handlePokemonChange1}>
+            {pokemonList.map((pokemon) => (
+              <option key={pokemon.id} value={pokemon.id}>
+                {pokemon.name.english}
+              </option>
+            ))}
+          </Select>
 
-      {selectedPokemon1 && (
-        <Card maxW='sm'>
-          <CardBody>
-          <Center>
+          {selectedPokemon1 && (
+            <Card maxW="sm" mt={4}>
+              <CardBody>
+                <Center>
+                  <Image
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${selectedPokemon1.id}.png`}
+                    alt={selectedPokemon1.name.english}
+                    boxSize={{ base: "80px", sm: "100px" }}
+                    objectFit="cover"
+                    transition="transform 0.3s ease-in-out"
+                    _hover={{ transform: "scale(1.2)" }}
+                  />
+                </Center>
+                <Stack spacing={3} mt={3}>
+                  <Heading as="h3" size="lg">{selectedPokemon1.name.english}</Heading>
+                </Stack>
+              </CardBody>
+              <CardFooter>
+                <UnorderedList styleType="none">
+                  <li>Type: {selectedPokemon1.type.join(", ")}</li>
+                  <li>Attack: {selectedPokemon1.base.Attack}</li>
+                  <li>Defense: {selectedPokemon1.base.Defense}</li>
+                  <li>HP: {selectedPokemon1.base.HP}</li>
+                  <li>Speed: {selectedPokemon1.base.Speed}</li>
+                  <li>Sp. Attack: {selectedPokemon1.base["Sp. Attack"]}</li>
+                  <li>Sp. Defense: {selectedPokemon1.base["Sp. Defense"]}</li>
+                </UnorderedList>
+              </CardFooter>
+            </Card>
+          )}
+        </Box>
+
+        <Center w="100%" my={{ base: 5, md: 0 }}>
           <Image
-
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${selectedPokemon1.id}.png`}
-            alt={selectedPokemon1.name.english}
-            boxSize="100px"
-            objectFit="cover"
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            style={{ transition: "transform 0.3s ease-in-out" }}
+            src="https://upload.wikimedia.org/wikipedia/commons/7/70/Street_Fighter_VS_logo.png"
+            alt="VS"
+            boxSize={{ base: "80px", sm: "100px" }}
+            objectFit="contain"
+            mx={{ base: 2, md: 5 }}
           />
-          </Center>
-          <Stack spacing={3}>
-          <Heading as="h3" size="lg">
-              {selectedPokemon1.name.english}
-            </Heading>
-          </Stack>
-       
-          </CardBody>
-          <CardFooter>
-          <UnorderedList styleType="none">
-              <li>Type: {selectedPokemon1.type.join(", ")}</li>
-              <li>Attack: {selectedPokemon1.base.Attack}</li>
-              <li>Defense: {selectedPokemon1.base.Defense}</li>
-              <li>HP: {selectedPokemon1.base.HP}</li>
-              <li>Speed: {selectedPokemon1.base.Speed}</li>
-              <li>Sp. Attack: {selectedPokemon1.base["Sp. Attack"]}</li>
-              <li>Sp. Defense: {selectedPokemon1.base["Sp. Defense"]}</li>
-            </UnorderedList>
-          </CardFooter>
-        </Card>
-      )}
-      </Box>
-      <Center><Image src="https://upload.wikimedia.org/wikipedia/commons/7/70/Street_Fighter_VS_logo.png"
+        </Center>
 
-      alt="VS"
-      boxSize="100px"
-      objectFit="fit"
-      margin={10}
-      /></Center>
-      
+        <Box w={{ base: "100%", md: "45%" }} p={4}>
+          <h2>Player 2</h2>
+          <Select placeholder="Select Pokemon 2" onChange={handlePokemonChange2}>
+            {pokemonList.map((pokemon) => (
+              <option key={pokemon.id} value={pokemon.id}>
+                {pokemon.name.english}
+              </option>
+            ))}
+          </Select>
 
-      <Box>
-      <h2>Player 2</h2>
-      <Select placeholder="Select Pokemon 2" onChange={handlePokemonChange2}>
-        {pokemonList.map((pokemon) => (
-          <option key={pokemon.id} value={pokemon.id}>
-            {pokemon.name.english}
-          </option>
-        ))}
-      </Select>
-
-      {selectedPokemon2 && (
-        
-        <Card>
-        
-          <CardBody>
-          <Center>
-          <Image
-            
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${selectedPokemon2.id}.png`}
-            alt={selectedPokemon2.name.english}
-            boxSize="100px"
-            objectFit="cover"
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            style={{ transition: "transform 0.3s ease-in-out" }}
-          />
-          </Center>
-        <Stack spacing={3}>
-        <Heading as="h3" size="lg">
-              {selectedPokemon2.name.english}
-            </Heading>
-        </Stack>
-          </CardBody>
-
-      
-
-      
-        <CardFooter>
-          <UnorderedList styleType="none">
-              <li>Type: {selectedPokemon1.type.join(", ")}</li>
-              <li>Attack: {selectedPokemon1.base.Attack}</li>
-              <li>Defense: {selectedPokemon1.base.Defense}</li>
-              <li>HP: {selectedPokemon1.base.HP}</li>
-              <li>Speed: {selectedPokemon1.base.Speed}</li>
-              <li>Sp. Attack: {selectedPokemon1.base["Sp. Attack"]}</li>
-              <li>Sp. Defense: {selectedPokemon1.base["Sp. Defense"]}</li>
-            </UnorderedList>
-          </CardFooter>
-        </Card>
-        
-      )}
-      </Box>
+          {selectedPokemon2 && (
+            <Card maxW="sm" mt={4}>
+              <CardBody>
+                <Center>
+                  <Image
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${selectedPokemon2.id}.png`}
+                    alt={selectedPokemon2.name.english}
+                    boxSize={{ base: "80px", sm: "100px" }}
+                    objectFit="cover"
+                    transition="transform 0.3s ease-in-out"
+                    _hover={{ transform: "scale(1.2)" }}
+                  />
+                </Center>
+                <Stack spacing={3} mt={3}>
+                  <Heading as="h3" size="lg">{selectedPokemon2.name.english}</Heading>
+                </Stack>
+              </CardBody>
+              <CardFooter>
+                <UnorderedList styleType="none">
+                  <li>Type: {selectedPokemon2.type.join(", ")}</li>
+                  <li>Attack: {selectedPokemon2.base.Attack}</li>
+                  <li>Defense: {selectedPokemon2.base.Defense}</li>
+                  <li>HP: {selectedPokemon2.base.HP}</li>
+                  <li>Speed: {selectedPokemon2.base.Speed}</li>
+                  <li>Sp. Attack: {selectedPokemon2.base["Sp. Attack"]}</li>
+                  <li>Sp. Defense: {selectedPokemon2.base["Sp. Defense"]}</li>
+                </UnorderedList>
+              </CardFooter>
+            </Card>
+          )}
+        </Box>
       </Flex>
-      <Center>
-      <Button margin={5} onClick={handleFight}>Fight!</Button>
+
+      <Center mt={5}>
+        <Button onClick={handleFight} isDisabled={!selectedPokemon1 || !selectedPokemon2} colorScheme="blue">
+          Fight!
+        </Button>
       </Center>
- 
-  {fightResult && (
-          
-          <Flex  direction="column" alignItems="center">
-            
+
+      {fightResult && (
+        <Flex direction="column" alignItems="center" mt={5}>
           <Heading>{fightResult.message}</Heading>
-          <Card>
-          <Image src={fightResult.imageUrl} alt="fight"
-           boxSize="100px"
-           objectFit="fit"
-            margin={10}
-          />
+          <Card mt={3}>
+            <Image src={fightResult.imageUrl} alt="fight result" boxSize="100px" objectFit="contain" margin={10} />
           </Card>
-          </Flex>
-          
-          
+        </Flex>
       )}
-      <Button as={Link} to="/api/pokemons"
-      margin={1}
-      >Back to Pokemon List</Button>
+
+      <Center mt={5}>
+        <Button as={Link} to="/api/pokemons" colorScheme="teal">Back to Pokemon List</Button>
+      </Center>
     </>
   );
 }
 
 export default Fight;
-
-
